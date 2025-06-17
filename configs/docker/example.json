@@ -1,0 +1,40 @@
+{
+  "log_params": {
+    "log_directory": "logs",
+    "log_info": "info.log",
+    "log_error": "error.log",
+    "log_warn": "warn.log",
+    "log_debug": "debug.log",
+    "max_size_megabytes": 10,
+    "max_backups": 4,
+    "max_age": 30,
+    "compress": true,
+    "local_time": true
+  },
+  "app_params": {
+    "gin_mode": "",
+    "port_run": "",
+    "server_url": "",
+    "server_name": ""
+  },
+  "postgres_params": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "database": "",
+    "sslmode": ""
+  },
+  "redis_params": {
+    "host": "",
+    "port": 6379,
+    "password": "",
+    "db": 0
+  },
+  "rabbit_params": {
+    "url_conn": "amqp://guest:guest@rabbitmq:5672/"
+  },
+  "auth_params": {
+    "jwt_secret_key": "",
+    "jwt_ttl_minutes": 60
+  }
+}
