@@ -24,7 +24,7 @@ import (
 // @title Gotenv API
 // @version 1.0.0
 
-// @description API Server for Ecadr Application
+// @description API Server for Gotenv Application
 // @BasePath /
 
 // @securityDefinitions.apikey ApiKeyAuth
