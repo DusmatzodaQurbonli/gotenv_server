@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: gotenv_app
+    build:
+      context: .
+    expose:
+      - "4545"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./.env:/app/.env
+    env_file:
+      - .env
+    environment:
+      - VIRTUAL_HOST=api.dastovard.tj
+      - VIRTUAL_PORT=4545
+      - LETSENCRYPT_HOST=api.dastovard.tj
+      - LETSENCRYPT_EMAIL=kurbonalidusmatzoda@gmail.com
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - gotenv_network
+      - nginx
+
+  db:
+    container_name: gotenv_db
+    image: postgres:16
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gotenv_network
+
+volumes:
+  db_data:
+
+networks:
+  gotenv_network:
+    driver: bridge
+  nginx:
+    external: true
