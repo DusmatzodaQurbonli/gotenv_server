@@ -13,9 +13,9 @@ services:
     env_file:
       - .env
     environment:
-      - VIRTUAL_HOST=api.dastovard.tj
+      - VIRTUAL_HOST=dotenv.dastovard.tj
       - VIRTUAL_PORT=4545
-      - LETSENCRYPT_HOST=api.dastovard.tj
+      - LETSENCRYPT_HOST=dotenv.dastovard.tj
       - LETSENCRYPT_EMAIL=kurbonalidusmatzoda@gmail.com
     depends_on:
       - db
