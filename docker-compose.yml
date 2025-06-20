@@ -8,7 +8,6 @@ services:
     expose:
       - "4545"
     volumes:
-      - ./uploads:/app/uploads
       - ./.env:/app/.env
     env_file:
       - .env
