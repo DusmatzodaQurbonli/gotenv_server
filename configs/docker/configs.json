@@ -1,0 +1,41 @@
+
+{
+  "log_params": {
+    "log_directory": "logs",
+    "log_info": "info.log",
+    "log_error": "error.log",
+    "log_warn": "warn.log",
+    "log_debug": "debug.log",
+    "max_size_megabytes": 10,
+    "max_backups": 4,
+    "max_age": 30,
+    "compress": true,
+    "local_time": true
+  },
+  "app_params": {
+    "gin_mode": "release",
+    "port_run": "6565",
+    "server_url": "89.169.38.40",
+    "server_name": "Ecadr_service"
+  },
+  "postgres_params": {
+    "host": "db",
+    "port": "5433",
+    "user": "postgres",
+    "database": "ecadr_db",
+    "sslmode": "disable"
+  },
+  "redis_params": {
+    "host": "redis",
+    "port": 6379,
+    "password": "",
+    "db": 0
+  },
+  "rabbit_params": {
+    "url_conn": "amqp://guest:guest@rabbitmq:5672/"
+  },
+  "auth_params": {
+    "jwt_secret_key": "",
+    "jwt_ttl_minutes": 60
+  }
+}
