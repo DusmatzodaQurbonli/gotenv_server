@@ -1,4 +1,4 @@
-# --- STAGE 1: Builder go ---
+# --- STAGE 1: Builder ---
 FROM golang:1.23.6 AS builder
 
 WORKDIR /app
