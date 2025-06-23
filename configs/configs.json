@@ -12,13 +12,13 @@
     "local_time": true
   },
   "app_params": {
-    "gin_mode": "debug",
+    "gin_mode": "release",
     "port_run": "4545",
-    "server_url": "localhost",
+    "server_url": "dotenv.dastovard.tj",
     "server_name": "Gotenv_service"
   },
   "postgres_params": {
-    "host": "localhost",
+    "host": "db",
     "port": "5432",
     "user": "postgres",
     "database": "gotenv_db",
