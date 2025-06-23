@@ -75,13 +75,18 @@ func GetProjectByIDAndUserID(c *gin.Context) {
 func CreateProject(c *gin.Context) {
 	userID := c.GetUint(middlewares.UserIDCtx)
 
-	var project models.Project
-	if err := c.ShouldBindJSON(&project); err != nil {
+	var projectReq models.ProjectReq
+	if err := c.ShouldBindJSON(&projectReq); err != nil {
 		HandleError(c, err)
 		return
 	}
 
+	var project models.Project
+
 	project.UserID = userID
+	project.Code = projectReq.Code
+	project.Title = projectReq.Title
+	project.IP = projectReq.IP
 
 	if err := service.CreateProject(&project); err != nil {
 		HandleError(c, err)
@@ -105,8 +110,8 @@ func CreateProject(c *gin.Context) {
 // @Router /projects/{id} [put]
 // @Security ApiKeyAuth
 func UpdateProject(c *gin.Context) {
-	var project models.Project
-	if err := c.ShouldBindJSON(&project); err != nil {
+	var projectReq models.ProjectReq
+	if err := c.ShouldBindJSON(&projectReq); err != nil {
 		HandleError(c, err)
 		return
 	}
@@ -114,8 +119,13 @@ func UpdateProject(c *gin.Context) {
 	userID := c.GetUint(middlewares.UserIDCtx)
 	projectID := c.GetUint(middlewares.ProjectIDCtx)
 
+	var project models.Project
+
 	project.ID = projectID
 	project.UserID = userID
+	project.Code = projectReq.Code
+	project.Title = projectReq.Title
+	project.IP = projectReq.IP
 
 	if err := service.UpdateProject(project); err != nil {
 		HandleError(c, err)

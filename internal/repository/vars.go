@@ -46,7 +46,7 @@ func GetProjectVarByTitle(projectID uint, title string) (vars models.Vars, err e
 	return vars, nil
 }
 
-func CreateProjectVar(vars models.Vars) (err error) {
+func CreateProjectVar(vars []models.Vars) (err error) {
 	if err = db.GetDBConn().Model(&models.Vars{}).Create(&vars).Error; err != nil {
 		logger.Error.Printf("[repository.CreateProjectVar] Error while creating project vars: %v\n", err)
 

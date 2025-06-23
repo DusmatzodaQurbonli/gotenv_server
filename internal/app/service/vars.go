@@ -10,6 +10,9 @@ import (
 )
 
 func GetAllProjectVars(projectID uint, projectLogin models.LoginProject) (vars []models.Vars, err error) {
+	projectLogin.Code = utils.GenerateHash(projectLogin.Code)
+	projectLogin.ProjectIP = utils.GenerateHash(projectLogin.ProjectIP)
+
 	vars, err = repository.GetAllProjectVars(projectID, projectLogin)
 	if err != nil {
 		return nil, err
@@ -58,9 +61,13 @@ func GetProjectVarByTitle(projectID uint, title string) (vars models.Vars, err e
 	return vars, nil
 }
 
-func CreateProjectVar(vars models.Vars) (err error) {
-	if err = validators.ValidateVars(&vars); err != nil {
-		return err
+func CreateProjectVar(vars []models.Vars) (err error) {
+	for variableI, variable := range vars {
+		if err = validators.ValidateVars(&variable); err != nil {
+			return err
+		}
+
+		vars[variableI] = variable
 	}
 
 	err = repository.CreateProjectVar(vars)

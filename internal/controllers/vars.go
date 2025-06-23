@@ -58,13 +58,17 @@ func GetAllProjectVars(c *gin.Context) {
 func CreateProjectVars(c *gin.Context) {
 	projectID := c.GetUint(middlewares.ProjectIDCtx)
 
-	var Vars models.Vars
+	var Vars []models.Vars
 	if err := c.Bind(&Vars); err != nil {
 		HandleError(c, errs.ErrValidationFailed)
 		return
 	}
 
-	Vars.ProjectID = projectID
+	for VarI, Var := range Vars {
+		Var.ProjectID = projectID
+
+		Vars[VarI] = Var
+	}
 
 	err := service.CreateProjectVar(Vars)
 	if err != nil {
