@@ -6,8 +6,6 @@
 logs
 
 # Security Files
-configs/configs.json
-configs/docker/configs.json
 .env
 *.exe
 *.pem
