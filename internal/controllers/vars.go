@@ -49,7 +49,7 @@ func GetAllProjectVars(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "ID проекта"
-// @Param Vars body models.VarsReq true "Новая переменная"
+// @Param Vars body []models.VarsReq true "Новая переменная"
 // @Success 200 {object} models.DefaultResponse
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse

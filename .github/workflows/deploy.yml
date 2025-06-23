@@ -45,7 +45,7 @@ jobs:
             --exclude '.env' \
             --exclude 'db_data' \
             -e "ssh -o StrictHostKeyChecking=no" ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/KudakTJ
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/DotEnv
 
 
       - name: Deploy project
