@@ -7,12 +7,7 @@ import (
 	"Gotenv/pkg/logger"
 )
 
-func GetAllProjectVars(projectID uint, projectLogin models.LoginProject) (vars []models.Vars, err error) {
-	project, err := GetProjectByID(projectID)
-	if err != nil {
-		return nil, err
-	}
-
+func GetAllProjectVars(project models.Project, projectID uint, projectLogin models.LoginProject) (vars []models.Vars, err error) {
 	if !(project.Code == projectLogin.Code && project.IP == projectLogin.ProjectIP) {
 		return nil, errs.ErrPermissionDenied
 	}

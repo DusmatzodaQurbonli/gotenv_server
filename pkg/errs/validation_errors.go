@@ -49,4 +49,5 @@ var (
 	ErrIPIsEmpty                = errors.New("ErrIPIsEmpty")
 	ErrProjectIDIsEmpty         = errors.New("ErrProjectIDIsEmpty")
 	ErrValueIsEmpty             = errors.New("ErrValueIsEmpty")
+	ErrProjectIsUnactive        = errors.New("ErrProjectIsUnactive")
 )

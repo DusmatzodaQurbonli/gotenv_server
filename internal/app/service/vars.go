@@ -10,10 +10,19 @@ import (
 )
 
 func GetAllProjectVars(projectID uint, projectLogin models.LoginProject) (vars []models.Vars, err error) {
+	project, err := repository.GetProjectByID(projectID)
+	if err != nil {
+		return nil, err
+	}
+
+	if !project.IsActive {
+		return nil, errs.ErrProjectIsUnactive
+	}
+
 	projectLogin.Code = utils.GenerateHash(projectLogin.Code)
 	projectLogin.ProjectIP = utils.GenerateHash(projectLogin.ProjectIP)
 
-	vars, err = repository.GetAllProjectVars(projectID, projectLogin)
+	vars, err = repository.GetAllProjectVars(project, projectID, projectLogin)
 	if err != nil {
 		return nil, err
 	}

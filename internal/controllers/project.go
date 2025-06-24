@@ -4,6 +4,7 @@ import (
 	"Gotenv/internal/app/models"
 	"Gotenv/internal/app/service"
 	"Gotenv/internal/controllers/middlewares"
+	"Gotenv/internal/repository"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -134,6 +135,44 @@ func UpdateProject(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Project updated successfully",
+	})
+}
+
+// UpdateProjectActive godoc
+// @Summary Обновить статус проекта
+// @Description Обновляет статус проекта, если он принадлежит пользователю
+// @Tags Projects
+// @Accept json
+// @Produce json
+// @Param id path int true "ID проекта"
+// @Success 200 {object} models.DefaultResponse
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Router /projects/{id}/active [patch]
+// @Security ApiKeyAuth
+func UpdateProjectActive(c *gin.Context) {
+	userID := c.GetUint(middlewares.UserIDCtx)
+	projectID := c.GetUint(middlewares.ProjectIDCtx)
+
+	project, err := service.GetProjectByIDAndUserID(userID, projectID)
+	if err != nil {
+		HandleError(c, err)
+		return
+	}
+
+	if project.IsActive {
+		project.IsActive = false
+	} else {
+		project.IsActive = true
+	}
+
+	if err = repository.UpdateProject(project); err != nil {
+		HandleError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Project active updated successfully",
 	})
 }
 

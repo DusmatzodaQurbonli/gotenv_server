@@ -4,6 +4,7 @@ import (
 	"Gotenv/internal/app/models"
 	"Gotenv/pkg/db"
 	"Gotenv/pkg/logger"
+	"time"
 )
 
 func GetProjectByID(projectID uint) (project models.Project, err error) {
@@ -54,7 +55,15 @@ func CreateProject(project *models.Project) (err error) {
 }
 
 func UpdateProject(project models.Project) (err error) {
-	if err = db.GetDBConn().Model(&models.Project{}).Where("id = ?", project.ID).Updates(&project).Error; err != nil {
+	projectOld, err := GetProjectByID(project.ID)
+	if err != nil {
+		return err
+	}
+
+	project.CreatedAt = projectOld.CreatedAt
+	project.UpdatedAt = time.Now()
+
+	if err = db.GetDBConn().Model(&models.Project{}).Where("id = ?", project.ID).Save(&project).Error; err != nil {
 		logger.Error.Printf("[repository.UpdateProject] Error while updating project: %v\n", err)
 
 		return TranslateGormError(err)

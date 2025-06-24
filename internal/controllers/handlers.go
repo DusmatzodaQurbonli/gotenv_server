@@ -16,6 +16,7 @@ func handleBadRequestErrors(err error) bool {
 		errors.Is(err, errs.ErrRoleIsRequired) ||
 		errors.Is(err, errs.ErrWrongRoleID) ||
 		errors.Is(err, errs.ErrInvalidVacancyID) ||
+		errors.Is(err, errs.ErrProjectIsUnactive) ||
 		errors.Is(err, errs.ErrCodeIsEmpty) ||
 		errors.Is(err, errs.ErrProjectIDIsEmpty) ||
 		errors.Is(err, errs.ErrIPIsEmpty) ||

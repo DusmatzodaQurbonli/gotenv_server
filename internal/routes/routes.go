@@ -33,6 +33,7 @@ func InitRoutes(r *gin.Engine) *gin.Engine {
 		project.GET("/:id", controllers.GetProjectByIDAndUserID)
 		project.POST("", controllers.CreateProject)
 		project.PUT("/:id", middlewares.CheckUsersProject, controllers.UpdateProject)
+		project.PATCH("/:id/active", middlewares.CheckUsersProject, controllers.UpdateProjectActive)
 		project.DELETE("/:id", middlewares.CheckUsersProject, controllers.DeleteProject)
 	}
 
