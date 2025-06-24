@@ -17,9 +17,8 @@ func EncryptAES256(plainText string) (string, error) {
 
 	// Проверка длины ключа
 	if len(key) != 32 {
+		key = "12345678901234567890123456789012"
 		logger.Error.Printf("[utils.EncryptAES256] Error while encrypting data: %s", fmt.Errorf("ключ должен быть длиной 32 символа").Error())
-
-		return "", fmt.Errorf("ключ должен быть длиной 32 символа")
 	}
 
 	// Преобразуем ключ в байты
