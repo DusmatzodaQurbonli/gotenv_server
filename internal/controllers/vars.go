@@ -5,8 +5,10 @@ import (
 	"Gotenv/internal/app/service"
 	"Gotenv/internal/controllers/middlewares"
 	"Gotenv/pkg/errs"
-	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // GetAllProjectVars godoc
@@ -99,7 +101,9 @@ func UpdateProjectVars(c *gin.Context) {
 	userID := c.GetUint(middlewares.UserIDCtx)
 
 	var Vars models.Vars
+
 	if err := c.Bind(&Vars); err != nil {
+		log.Printf("INFO ebaanat ", Vars)
 		HandleError(c, errs.ErrValidationFailed)
 		return
 	}
