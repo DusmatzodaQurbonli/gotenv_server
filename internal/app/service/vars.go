@@ -87,20 +87,24 @@ func CreateProjectVar(vars []models.Vars) (err error) {
 	return nil
 }
 
-func UpdateProjectVar(vars models.Vars, userID uint) (err error) {
-	if vars.ProjectID != 0 {
-		_, err = GetProjectByIDAndUserID(userID, vars.ProjectID)
-		if err != nil {
-			if errors.Is(err, errs.ErrRecordNotFound) {
-				return errs.ErrPermissionDenied
+func UpdateProjectVar(vars []models.Vars, userID uint) (err error) {
+	for variableI, variable := range vars {
+		if variable.ProjectID != 0 {
+			_, err = GetProjectByIDAndUserID(userID, variable.ProjectID)
+			if err != nil {
+				if errors.Is(err, errs.ErrRecordNotFound) {
+					return errs.ErrPermissionDenied
+				}
+
+				return errs.ErrSomethingWentWrong
 			}
-
-			return errs.ErrSomethingWentWrong
 		}
-	}
 
-	if err = validators.ValidateVars(&vars); err != nil {
-		return err
+		if err = validators.ValidateVars(&variable); err != nil {
+			return err
+		}
+
+		vars[variableI] = variable
 	}
 
 	err = repository.UpdateProjectVar(vars)

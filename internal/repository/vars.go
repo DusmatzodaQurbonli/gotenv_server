@@ -51,9 +51,27 @@ func CreateProjectVar(vars []models.Vars) (err error) {
 	return nil
 }
 
-func UpdateProjectVar(vars models.Vars) (err error) {
-	if err = db.GetDBConn().Model(&models.Vars{}).Where("id = ?", vars.ID).Updates(vars).Error; err != nil {
-		logger.Error.Printf("[repository.UpdateProjectVar] Error while updating project vars: %v\n", err)
+func UpdateProjectVar(vars []models.Vars) (err error) {
+	tx := db.GetDBConn().Begin()
+
+	for _, variable := range vars {
+		if variable.ID != 0 {
+			if err = tx.Model(&models.Vars{}).Where("id = ?", variable.ID).Updates(variable).Error; err != nil {
+				logger.Error.Printf("[repository.UpdateProjectVar] Error while updating project vars: %v\n", err)
+
+				return TranslateGormError(err)
+			}
+		} else {
+			if err = tx.Model(&models.Vars{}).Create(&variable).Error; err != nil {
+				logger.Error.Printf("[repository.UpdateProjectVar] Error while creating project vars: %v\n", err)
+
+				return TranslateGormError(err)
+			}
+		}
+	}
+
+	if err = tx.Commit().Error; err != nil {
+		logger.Error.Printf("[repository.UpdateProjectVar] Error while commiting transaction: %v\n", err)
 
 		return TranslateGormError(err)
 	}

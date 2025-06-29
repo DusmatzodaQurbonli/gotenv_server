@@ -87,24 +87,27 @@ func CreateProjectVars(c *gin.Context) {
 // @Tags ProjectVars
 // @Accept json
 // @Produce json
-// @Param id path int true "ID переменной"
-// @Param Vars body models.VarsReq true "Обновлённая переменная"
+// @Param id path int true "ID проекта"
+// @Param Vars body []models.VarsReq true "Обновлённая переменная"
 // @Success 200 {object} models.DefaultResponse
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
 // @Router /projects/vars/{id} [put]
 // @Security ApiKeyAuth
 func UpdateProjectVars(c *gin.Context) {
-	varsID := c.GetUint(middlewares.VarsIDCtx)
+	projectID := c.GetUint(middlewares.ProjectIDCtx)
 	userID := c.GetUint(middlewares.UserIDCtx)
 
-	var Vars models.Vars
+	var Vars []models.Vars
 	if err := c.Bind(&Vars); err != nil {
 		HandleError(c, errs.ErrValidationFailed)
 		return
 	}
 
-	Vars.ID = varsID
+	for VarI, Var := range Vars {
+		Var.ProjectID = projectID
+		Vars[VarI] = Var
+	}
 
 	err := service.UpdateProjectVar(Vars, userID)
 	if err != nil {

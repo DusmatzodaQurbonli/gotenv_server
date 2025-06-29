@@ -41,7 +41,7 @@ func InitRoutes(r *gin.Engine) *gin.Engine {
 	{
 		projectVars.POST("/val/:id", middlewares.CheckUsersProject, controllers.GetAllProjectVars)
 		projectVars.POST("/:id", middlewares.CheckUsersProject, controllers.CreateProjectVars)
-		projectVars.PUT("/:id", middlewares.CheckUsersProjectByVarsID, controllers.UpdateProjectVars)
+		projectVars.PUT("/:id", middlewares.CheckUsersProject, controllers.UpdateProjectVars)
 		projectVars.DELETE("/:id", middlewares.CheckUsersProjectByVarsID, controllers.DeleteProjectVars)
 	}
 
