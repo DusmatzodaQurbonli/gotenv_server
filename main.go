@@ -82,7 +82,7 @@ func main() {
 			"http://localhost:3008",
 			"http://localhost:3009",
 			"http://localhost:3010",
-			"https://dontenv.intelligent.tj"},
+			"https://dotenv.intelligent.tj"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
