@@ -4,9 +4,10 @@ import (
 	_ "Gotenv/docs"
 	"Gotenv/internal/controllers"
 	"Gotenv/internal/controllers/middlewares"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // InitRoutes — настраиваем HTTP-маршруты
